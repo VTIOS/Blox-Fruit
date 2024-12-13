@@ -101,11 +101,11 @@ function AllowRunServiceBind.OnInvoke(args)
     CoreGui:SetCore("SendNotification", {
         Title = "Alex Hub",
         Text = "By: @vanthanhisme_",
-        Icon = "rbxthumb://type=Asset&id=84740298420180&w=150&h=150",
+        Icon = "rbxthumb://type=Asset&id=103439991632690&w=150&h=150",
         Duration = math.huge,
         Callback = AllowRunServiceBind,
-        Button1 = "Enable",
-        Button2 = "Disable",
+        Button1 = "Bật Lại Cu",
+        Button2 = "Tắt Đi Cu",
     })
 end
 
@@ -114,9 +114,9 @@ task.spawn(function()
     CoreGui:SetCore("SendNotification", {
         Title = "Thông Báo Alex",
         Text = "Bạn đang sử dụng Script Nhặt Rương Của Alex",
-        Icon = "rbxthumb://type=Asset&id=84740298420180&w=150&h=150",
+        Icon = "rbxthumb://type=Asset&id=103439991632690&w=150&h=150",
         Duration = 10,
-        BackgroundColor3 = Color3.fromRGB(255, 215, 0) -- Màu vàng
+        BackgroundColor3 = Color3.fromRGB(255, 215, 0)
     })
 end)
 
@@ -136,11 +136,11 @@ local CoreGui = game:GetService("StarterGui")
 CoreGui:SetCore("SendNotification", {
     Title = "Bú Bú",
     Text = "Alex Hub",
-    Icon = "rbxthumb://type=Asset&id=84740298420180&w=150&h=150",
+    Icon = "rbxthumb://type=Asset&id=103439991632690&w=150&h=150",
     Duration = math.huge,
     Callback = AllowRunServiceBind,
-    Button1 = "Enable",
-    Button2 = "Disable",
+    Button1 = "Bật Lại Cu",
+    Button2 = "Tắt Đi Cu",
 })
 
 task.spawn(function()
