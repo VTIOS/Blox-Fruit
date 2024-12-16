@@ -53,62 +53,71 @@ end)
 
 -- Script giảm lag hợp pháp trong Roblox
 local Players = game:GetService("Players")
-local Lighting = game:GetService("Lighting")
-
-local function optimizeGraphics()
-    Lighting.GlobalShadows = false
-    Lighting.FogEnd = 100000
-    Lighting.Brightness = 2
-    Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
-
-    for _, part in pairs(workspace:GetDescendants()) do
-        if part:IsA("BasePart") then
-            part.Material = Enum.Material.SmoothPlastic
-            part.CastShadow = false
-        elseif part:IsA("ParticleEmitter") or part:IsA("Trail") then
-            part.Enabled = false
-        elseif part:IsA("Decal") or part:IsA("Texture") then
-            part.Transparency = 0.5
-        end
-    end
-
-    local player = Players.LocalPlayer
-    if player.Character then
-        for _, obj in pairs(player.Character:GetDescendants()) do
-            if obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
-                obj.Enabled = false
-            end
-        end
-    end
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Mouse = game.Players.LocalPlayer:GetMouse()
+local CamlockState = false
+local Prediction = 0.16
+local HorizontalPrediction = 0.17
+local VerticalPrediction = 0.14
+local XPrediction = 8.381
+local YPrediction = 7.282
+local Players = game:GetService("Players")
+local LP = Players.LocalPlayer
+local Mouse = LP:GetMouse()
+local Locked = true
+getgenv().Key = "c"
+function FindNearestEnemy()
+local ClosestDistance, ClosestPlayer = math.huge, nil
+local CenterPosition =
+Vector2.new(
+game:GetService("GuiService"):GetScreenResolution().X / 2,
+game:GetService("GuiService"):GetScreenResolution().Y / 2
+)
+for _, Player in ipairs(game:GetService("Players"):GetPlayers()) do
+if Player ~= LocalPlayer then
+local Character = Player.Character
+if Character and Character:FindFirstChild("HumanoidRootPart") and Character.Humanoid.Health > 0 then
+local Position, IsVisibleOnViewport =
+game:GetService("Workspace").CurrentCamera:WorldToViewportPoint(Character.HumanoidRootPart.Position)
+if IsVisibleOnViewport then
+local Distance = (CenterPosition - Vector2.new(Position.X, Position.Y)).Magnitude
+if Distance < ClosestDistance then
+ClosestPlayer = Character.HumanoidRootPart
+ClosestDistance = Distance
 end
-
-local function resetGraphics()
-    Lighting.GlobalShadows = true
-    Lighting.FogEnd = 1000
-    Lighting.Brightness = 1
-    Lighting.OutdoorAmbient = Color3.new(0.5, 0.5, 0.5)
-
-    for _, part in pairs(workspace:GetDescendants()) do
-        if part:IsA("BasePart") then
-            part.Material = Enum.Material.Plastic
-            part.CastShadow = true
-        elseif part:IsA("ParticleEmitter") or part:IsA("Trail") then
-            part.Enabled = true
-        elseif part:IsA("Decal") or part:IsA("Texture") then
-            part.Transparency = 0
-        end
-    end
-
-    local player = Players.LocalPlayer
-    if player.Character then
-        for _, obj in pairs(player.Character:GetDescendants()) do
-            if obj:IsA("ParticleEmitter") or obj:IsA("Trail") then
-                obj.Enabled = true
-            end
-        end
-    end
 end
-
+end
+end
+end
+return ClosestPlayer
+end
+local enemy = nil
+-- Function to aim the camera at the nearest enemy's HumanoidRootPart
+RunService.Heartbeat:Connect(
+function()
+if CamlockState == true then
+if enemy then
+local camera = workspace.CurrentCamera
+camera.CFrame = CFrame.new(camera.CFrame.p, enemy.Position + enemy.Velocity * Prediction)
+end
+end
+end
+)
+Mouse.KeyDown:Connect(function(k)
+if k == getgenv().Key then
+Locked = not Locked
+if Locked then
+enemy = FindNearestEnemy()
+CamlockState = true
+else
+if enemy ~= nil then
+enemy = nil
+CamlockState = false
+end
+end
+end
+end)
 -- Tắt/Bật fix lag khi nhấn nút
 ToggleButton.MouseButton1Click:Connect(function()
     isLagFixEnabled = not isLagFixEnabled
