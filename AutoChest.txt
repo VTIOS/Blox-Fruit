@@ -1,21 +1,14 @@
 local AllowRunService = true
 local AllowRunServiceBind = Instance.new("BindableFunction")
 function AllowRunServiceBind.OnInvoke(args)
-    if args == "Enable" then
-        AllowRunService = true
-    elseif args == "Disable" then
-        AllowRunService = false
-    end
-    local CoreGui = game:GetService("StarterGui")
-    CoreGui:SetCore("SendNotification", {
-        Title = "Thông Báo Alex",
-        Text = "Bạn đang sử dụng Script Nhặt Rương Của Alex",
-        Icon = "rbxthumb://type=Asset&id=84740298420180&w=150&h=150",
-        Duration = 10,
-        BackgroundColor3 = Color3.fromRGB(255, 215, 0) -- Màu vàng
-        end
-    end
-end)
+if _G.SendNotifications then
+    StarterGui:SetCore("SendNotification", {
+        Title = "discord.gg/rips",
+        Text = "Loading FPS Booster...",
+        Duration = math.huge,
+        Button1 = "Okay"
+    })
+end
 local Players = game:GetService("Players")
 local Local = Players.LocalPlayer
 
