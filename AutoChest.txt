@@ -8,56 +8,11 @@ function AllowRunServiceBind.OnInvoke(args)
     end
     local CoreGui = game:GetService("StarterGui")
     CoreGui:SetCore("SendNotification", {
-        Title = "Alex Hub",
-        Text = "By: @vanthanhisme_",
-        Icon = "rbxthumb://type=Asset&id=84740298420180&w=150&h=150",
-        Duration = math.huge,
-        Callback = AllowRunServiceBind,
-        Button1 = "Enable",
-        Button2 = "Disable",
-    })
-end
-
-task.spawn(function()
-    local CoreGui = game:GetService("StarterGui")
-    CoreGui:SetCore("SendNotification", {
         Title = "Thông Báo Alex",
         Text = "Bạn đang sử dụng Script Nhặt Rương Của Alex",
         Icon = "rbxthumb://type=Asset&id=84740298420180&w=150&h=150",
         Duration = 10,
         BackgroundColor3 = Color3.fromRGB(255, 215, 0) -- Màu vàng
-    })
-end)
-
-task.spawn(function()
-    while task.wait() do
-        task.spawn(function()
-            if godsChalicSniper == true then
-                if stuff then
-                    AllowRunService = false
-                end
-            end
-        end)
-    end
-end)
-
-local CoreGui = game:GetService("StarterGui")
-CoreGui:SetCore("SendNotification", {
-    Title = "Bú Bú",
-    Text = "Alex Hub",
-    Icon = "rbxthumb://type=Asset&id=84740298420180&w=150&h=150",
-    Duration = math.huge,
-    Callback = AllowRunServiceBind,
-    Button1 = "Enable",
-    Button2 = "Disable",
-})
-
-task.spawn(function()
-    while true and task.wait(.5) do
-        if AllowRunService == true then
-            local ohString1 = "SetTeam"
-            local ohString2 = "Marines"
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(ohString1, ohString2)
         end
     end
 end)
